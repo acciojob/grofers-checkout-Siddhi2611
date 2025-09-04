@@ -11,6 +11,12 @@ const getSum = () => {
     total += parseInt(cell.textContent);
   });
 
+  // Remove previous total row if exists
+  const oldAns = document.getElementById("ans");
+  if (oldAns) {
+    oldAns.parentElement.remove();
+  }
+
   // Create a new row
   const table = document.querySelector("table");
   const newRow = document.createElement("tr");
@@ -19,13 +25,13 @@ const getSum = () => {
   // span across 2 columns
   totalCell.setAttribute("colspan", "2");
   totalCell.style.fontWeight = "bold";
-  totalCell.textContent = `Total Price = Rs ${total}`;
+
+  // ✅ Add id="ans" so Cypress can detect it
+  totalCell.id = "ans";
+  totalCell.textContent = total;
 
   newRow.appendChild(totalCell);
   table.appendChild(newRow);
-
-  // Disable button to prevent multiple rows being added
-  getSumBtn.disabled = true;
 };
 
 getSumBtn.addEventListener("click", getSum);
